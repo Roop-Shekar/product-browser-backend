@@ -1,16 +1,4 @@
-# Python
+venv/
 __pycache__/
 *.pyc
-
-# Virtual environment
-venv/
-.venv/
-
-# Environment variables
 .env
-
-# VS Code
-.vscode/
-
-# PyCharm
-.idea/
