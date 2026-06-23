@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.db import get_connection, release_connection
 from app.products import router as products_router
 
@@ -7,6 +9,19 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# CORS Configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Register Product Routes
 app.include_router(products_router)
 
 
@@ -38,7 +53,7 @@ def health_check():
 
     finally:
         if conn:
-         release_connection(conn)
+            release_connection(conn)
 
 
 @app.get("/products/count")

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Browser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Product Browser Dashboard</h1>
+    </header>
+
+    <div class="stats">
+        <div class="card">
+            <h3>Total Products</h3>
+            <p id="totalProducts">-</p>
+        </div>
+
+        <div class="card">
+            <h3>Loaded Products</h3>
+            <p id="loadedCount">0</p>
+        </div>
+    </div>
+
+    <div class="filters">
+        <label>Category</label>
+
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+        </select>
+
+        <button id="applyFilter">Apply</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Updated At</th>
+            </tr>
+        </thead>
+
+        <tbody id="productTable">
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button id="loadMoreBtn">
+            Load More
+        </button>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -14,10 +14,7 @@ from app.db import get_connection
 from faker import Faker
 from random import choice, uniform
 from datetime import timedelta
-
 from psycopg2.extras import execute_values
-
-
 
 fake = Faker()
 
@@ -35,6 +32,10 @@ categories = [
 conn = get_connection()
 cursor = conn.cursor()
 
+# OPTIONAL: Clear existing products
+cursor.execute("TRUNCATE TABLE products RESTART IDENTITY;")
+conn.commit()
+
 insert_query = """
 INSERT INTO products
 (
@@ -51,9 +52,14 @@ inserted = 0
 
 while inserted < TOTAL_PRODUCTS:
 
+    current_batch_size = min(
+        BATCH_SIZE,
+        TOTAL_PRODUCTS - inserted
+    )
+
     batch = []
 
-    for _ in range(BATCH_SIZE):
+    for _ in range(current_batch_size):
 
         created_at = fake.date_time_between(
             start_date="-2y",
@@ -82,13 +88,11 @@ while inserted < TOTAL_PRODUCTS:
 
     conn.commit()
 
-    inserted += BATCH_SIZE
+    inserted += current_batch_size
 
-    print(
-        f"Inserted {inserted}/{TOTAL_PRODUCTS}"
-    )
+    print(f"Inserted {inserted}/{TOTAL_PRODUCTS}")
 
 cursor.close()
 conn.close()
 
-print("Finished seeding 200000 products")
+print("\nFinished seeding exactly 200000 products")
